@@ -1,9 +1,6 @@
 import { PostContainer } from "../components/post-container";
-import { Link } from "react-router-dom";
-
 
 export default function Home() {
-  //title limite 66 caractere?
   return (
     <div className="w-full bg-[#282A2E] flex justify-center p-4">
       

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { LoginInput } from "../components/login-input";
 
 export default function Login() {
-  //
   return (
     <div className="w-full h-screen bg-[#282A2E] relative">
       <img
