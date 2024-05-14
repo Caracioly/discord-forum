@@ -1,8 +1,8 @@
-import { PostContainer } from "../components/post-container";
+import { PostContainer } from "@/components/post-container";
 
 export default function Home() {
   return (
-    <div className="w-full bg-[#282A2E] flex justify-center p-4">
+    <div className="w-full bg-gray-main flex justify-center p-4">
       
       <div className="grid grid-row gap-4 md:w-[70%] sm:w-[90%] 2xl:w-[50%] lg:w-[60%] xl:w-[80%]">
         <PostContainer
