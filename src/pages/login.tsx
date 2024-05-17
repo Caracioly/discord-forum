@@ -1,7 +1,14 @@
+import { useState } from "react";
+
+import { Link } from "react-router-dom";
+
 import { LoginInput } from "@/components/login-input";
 import { LoginButton } from "@/components/login-button";
 
 export default function Login() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
   return (
     <div className="w-full h-screen bg-gray-main relative">
       <img
@@ -14,7 +21,7 @@ export default function Login() {
           <h1 className="text-white text-xl font-bold">
             Boas-vindas de volta!
           </h1>
-          <h2 className="text-gray text-lg">
+          <h2 className="text-gray text-lg text-center">
             Estamos muito animados em te ver novamente!
           </h2>
           <div className="flex flex-col w-[80%] gap-1 mt-4">
@@ -22,26 +29,32 @@ export default function Login() {
               E-mail
               <span className="text-red ml-1">*</span>
             </h1>
-            <LoginInput type="email"></LoginInput>
+            <LoginInput
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+            ></LoginInput>
           </div>
           <div className="flex flex-col w-[80%] gap-1 mt-4">
             <h1 className="text-gray font-semibold">
               Senha
               <span className="text-red ml-1">*</span>
             </h1>
-            <LoginInput type="password"></LoginInput>
+            <LoginInput
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+            ></LoginInput>
             <button className="text-light-blue font-bold text-sm mt-1 self-start hover:underline">
               Esqueceu sua senha?
             </button>
-            <LoginButton
-            path="/home"
-            inputText="Entrar"
-            />
+            <LoginButton path="/home" inputText="Entrar" />
             <h1 className="text-sm text-gray">
               Precisando de uma conta?
-              <button className="text-light-blue font-bold text-sm mt-1 self-start hover:underline ml-2">
+              <Link
+                className="text-light-blue font-bold text-sm mt-1 self-start hover:underline ml-2"
+                to="/register"
+              >
                 Registre-se
-              </button>
+              </Link>
             </h1>
           </div>
         </div>

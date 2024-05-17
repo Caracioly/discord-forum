@@ -18,7 +18,7 @@ export function PostContainer({
         <Tag label="remote" />
         <Tag label="front-end" />
       </div>
-      <div className="flex flex-col border-t border-gray-500 p-2">
+      <div className="flex flex-col border-t border-gray-input p-2">
         <div className="flex gap-x-3 mt-1 items-center">
           <h1 className="text-gray font-semibold ">@PostAutor</h1>
           <h1 className="text-gray font-thin text-sm">Há 4h</h1>
