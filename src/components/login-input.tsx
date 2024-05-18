@@ -7,6 +7,6 @@ export function LoginInput({ ...rest }: LoginInputProps) {
     <input
       className="bg-gray-input rounded-md text-gray font-medium text-md outline-none p-2"
       {...rest}
-    ></input>
+    />
   );
 }

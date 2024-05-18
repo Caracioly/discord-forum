@@ -1,15 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 
-type LoginButtonProps = {
+interface LoginButtonProps extends LinkProps {
   inputText: string;
-  path: string;
-};
+}
 
-export function LoginButton({ inputText, path }: LoginButtonProps) {
+export function LoginButton({ inputText, ...rest }: LoginButtonProps) {
   return (
     <Link
       className="text-white font-bold bg-blue-button w-full p-2 rounded-md mt-4 text-center hover:bg-blue-hover"
-      to={path}
+      {...rest}
     >
       {inputText}
     </Link>

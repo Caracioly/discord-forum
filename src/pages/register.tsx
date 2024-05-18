@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
-import { DateSelector } from "@/components/date-selector";
+import { DateSelector } from "@/components/Date-Selector/index";
 import { LoginButton } from "@/components/login-button";
 import { LoginInput } from "@/components/login-input";
 
 export default function Register() {
+  const [selectedDay, setSelectedDay] = useState<string>("");
+  const [selectedMonth, setSelectedMonth] = useState<string>("");
+  const [selectedYear, setSelectedYear] = useState<string>("");
+
   return (
     <div className="w-full h-screen bg-gray-main relative">
       <img
@@ -35,8 +40,18 @@ export default function Register() {
               Data de Nascimento
               <span className="text-red ml-1">*</span>
             </h1>
-            <DateSelector></DateSelector>
-            <LoginButton path="/home" inputText="Continuar" />
+            <DateSelector.Root>
+              <DateSelector.Day value={selectedDay} setValue={setSelectedDay} />
+              <DateSelector.Month
+                value={selectedMonth}
+                setValue={setSelectedMonth}
+              />
+              <DateSelector.Year
+                value={selectedYear}
+                setValue={setSelectedYear}
+              />
+            </DateSelector.Root>
+            <LoginButton to="/home" inputText="Continuar" />
           </div>
           <h1 className="text-sm text-gray">
             Já tem uma conta?

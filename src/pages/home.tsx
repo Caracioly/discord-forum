@@ -12,7 +12,6 @@ export default function Home() {
         <PostContainer
           postTitle={"Procura-se Dev Freelancer Front-end Fullstack trabalho remoto bem."}
           postContent="Prazer, meu nome é Gabriel e estou querendo programadores para criação... de um site de vendas! Vamos trabalhar com Dropshipping direto estamos atualmente com esse projeto"
-          postImg="https://media.discordapp.net/attachments/1232409845211336758/1232409845358002217/Captura_de_tela_2024-04-22_215909.png?ex=662a035c&is=6628b1dc&hm=8c740dc48ad41d618a05cb3f5432cd66a37e260626e2188e123f9593b41f8825&.png"
         ></PostContainer>
         <PostContainer
           postTitle={"Procura-se Dev Freelancer Front-end Fullstack"}

@@ -9,6 +9,12 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const handleLogin = async () => {
+    const response = await fetch("http://localhost:3333/users/b28aebd5-047e-4c6a-b54f-f44196889b04")
+    const user = await response.json()
+    console.log(user)
+  };
+
   return (
     <div className="w-full h-screen bg-gray-main relative">
       <img
@@ -46,7 +52,10 @@ export default function Login() {
             <button className="text-light-blue font-bold text-sm mt-1 self-start hover:underline">
               Esqueceu sua senha?
             </button>
-            <LoginButton path="/home" inputText="Entrar" />
+            <LoginButton
+              onClick={handleLogin}
+              to="/home"
+              inputText="Entrar"  />
             <h1 className="text-sm text-gray">
               Precisando de uma conta?
               <Link
