@@ -1,19 +1,29 @@
 import { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { LoginInput } from "@/components/login-input";
 import { LoginButton } from "@/components/login-button";
+
+import { useAuth } from "@/context/AuthProvider/useAuth";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const handleLogin = async () => {
-    const response = await fetch("http://localhost:3333/users/b28aebd5-047e-4c6a-b54f-f44196889b04")
-    const user = await response.json()
-    console.log(user)
-  };
+  const auth = useAuth();
+  const navigate = useNavigate();
+
+  async function onFinish(values: { email: string; password: string }) {
+    try {
+      await auth.authenticate(values.email, values.password);
+
+      navigate("/home")
+
+    } catch (err) {
+      console.error("Email or Password invalid.");
+    }
+  }
 
   return (
     <div className="w-full h-screen bg-gray-main relative">
@@ -53,9 +63,9 @@ export default function Login() {
               Esqueceu sua senha?
             </button>
             <LoginButton
-              onClick={handleLogin}
-              to="/home"
-              inputText="Entrar"  />
+              onClick={() => onFinish({ email, password })}
+              inputText="Entrar"
+            />
             <h1 className="text-sm text-gray">
               Precisando de uma conta?
               <Link

@@ -51,7 +51,9 @@ export default function Register() {
                 setValue={setSelectedYear}
               />
             </DateSelector.Root>
-            <LoginButton to="/home" inputText="Continuar" />
+            <LoginButton 
+            //to="/home" 
+            inputText="Continuar" />
           </div>
           <h1 className="text-sm text-gray">
             Já tem uma conta?
