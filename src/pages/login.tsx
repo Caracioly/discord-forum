@@ -7,21 +7,35 @@ import { LoginButton } from "@/components/login-button";
 
 import { useAuth } from "@/context/AuthProvider/useAuth";
 
+import { validateEmail, validatePassword } from "@/utils/login-validate";
+
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const auth = useAuth();
   const navigate = useNavigate();
 
   async function onFinish(values: { email: string; password: string }) {
+    const emailValidation = validateEmail(values.email);
+    if (!emailValidation.valid) {
+      setError(emailValidation.message);
+      return;
+    }
+
+    const passwordValidation = validatePassword(values.password);
+    if (!passwordValidation.valid) {
+      setError(passwordValidation.message);
+      return;
+    }
+
     try {
       await auth.authenticate(values.email, values.password);
 
-      navigate("/home")
-
+      navigate("/home");
     } catch (err) {
-      console.error("Email or Password invalid.");
+      setError("Email ou senha inválidos.");
     }
   }
 
@@ -59,6 +73,11 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               type="password"
             ></LoginInput>
+            {error && (
+              <span className="text-red font-thin text-sm mt-1 self-start">
+                {error}
+              </span>
+            )}
             <button className="text-light-blue font-bold text-sm mt-1 self-start hover:underline">
               Esqueceu sua senha?
             </button>
