@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { months } from "@/utils/calendar";
 
 interface MonthSelectorProps {
-  value: string;
+  value?: string;
   setValue: Dispatch<SetStateAction<string>>;
 }
 

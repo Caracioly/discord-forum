@@ -1,14 +1,45 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+import { FormData } from "@/types/register";
 
 import { DateSelector } from "@/components/Date-Selector/index";
 import { LoginButton } from "@/components/login-button";
 import { LoginInput } from "@/components/login-input";
 
+import { Api } from "@/services/api";
+
 export default function Register() {
-  const [selectedDay, setSelectedDay] = useState<string>("");
-  const [selectedMonth, setSelectedMonth] = useState<string>("");
-  const [selectedYear, setSelectedYear] = useState<string>("");
+  const [formData, setFormData] = useState<FormData>({
+    selectedDay: "",
+    selectedMonth: "",
+    selectedYear: "",
+    email: "",
+    userTag: "",
+    password: "",
+  });
+  const [error, setError] = useState<string>("");
+
+  console.log(formData.selectedDay);
+  console.log(formData.selectedMonth);
+  console.log(formData.selectedYear);
+
+  const navigate = useNavigate();
+
+  async function onFinish() {
+    try {
+      const request = await Api.post("users", {
+        email: formData.email,
+        password: formData.password,
+        userTag: formData.userTag,
+      });
+
+      console.log(request.data);
+      navigate("/home");
+    } catch (err) {
+      return null;
+    }
+  }
 
   return (
     <div className="w-full h-screen bg-gray-main relative">
@@ -25,35 +56,55 @@ export default function Register() {
               E-mail
               <span className="text-red ml-1">*</span>
             </h1>
-            <LoginInput type="email"></LoginInput>
+            <LoginInput
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            ></LoginInput>
             <h1 className="text-gray font-semibold">
               Nome de Usuário
               <span className="text-red ml-1">*</span>
             </h1>
-            <LoginInput type="text"></LoginInput>
+            <LoginInput
+              type="text"
+              onChange={(e) =>
+                setFormData({ ...formData, userTag: e.target.value })
+              }
+            ></LoginInput>
             <h1 className="text-gray font-semibold">
               Senha
               <span className="text-red ml-1">*</span>
             </h1>
-            <LoginInput type="password"></LoginInput>
+            <LoginInput
+              type="password"
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+            ></LoginInput>
             <h1 className="text-gray font-semibold">
               Data de Nascimento
               <span className="text-red ml-1">*</span>
             </h1>
             <DateSelector.Root>
-              <DateSelector.Day value={selectedDay} setValue={setSelectedDay} />
+              <DateSelector.Day
+                setValue={(value) =>
+                  setFormData({ ...formData, selectedDay: value })
+                }
+              />
               <DateSelector.Month
-                value={selectedMonth}
-                setValue={setSelectedMonth}
+                setValue={(value) =>
+                  setFormData({ ...formData, selectedMonth: value })
+                }
               />
               <DateSelector.Year
-                value={selectedYear}
-                setValue={setSelectedYear}
+                setValue={(value) =>
+                  setFormData({ ...formData, selectedYear: value })
+                }
               />
             </DateSelector.Root>
-            <LoginButton 
-            //to="/home" 
-            inputText="Continuar" />
+            <LoginButton onClick={onFinish} inputText="Continuar" />
           </div>
           <h1 className="text-sm text-gray">
             Já tem uma conta?

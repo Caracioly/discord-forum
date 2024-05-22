@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { days } from "@/utils/calendar";
 
 interface DaySelectorProps {
-  value: string;
+  value?: string;
   setValue: Dispatch<SetStateAction<string>>;
 }
 

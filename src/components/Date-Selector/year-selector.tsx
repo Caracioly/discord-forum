@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { years } from "@/utils/calendar";
 
 interface YearSelectorProps {
-  value: string;
+  value?: string;
   setValue: Dispatch<SetStateAction<string>>;
 }
 
