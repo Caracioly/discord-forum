@@ -7,37 +7,47 @@ import { DateSelector } from "@/components/Date-Selector/index";
 import { LoginButton } from "@/components/login-button";
 import { LoginInput } from "@/components/login-input";
 
+import { validateForm } from "@/utils/register/form-validation";
+
 import { Api } from "@/services/api";
+import { useToast } from "@/context/Toast";
 
 export default function Register() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
-    selectedDay: "",
-    selectedMonth: "",
-    selectedYear: "",
+    selectedDay: "1",
+    selectedMonth: "1",
+    selectedYear: "2024",
     email: "",
     userTag: "",
     password: "",
   });
   const [error, setError] = useState<string>("");
-
-  console.log(formData.selectedDay);
-  console.log(formData.selectedMonth);
-  console.log(formData.selectedYear);
+  const toast = useToast();
 
   const navigate = useNavigate();
 
   async function onFinish() {
+    const validation = validateForm(formData);
+    if (!validation.valid) {
+      setError(validation.message);
+      return;
+    }
     try {
-      const request = await Api.post("users", {
+      await Api.post("users", {
         email: formData.email,
         password: formData.password,
         userTag: formData.userTag,
+        birthDate: `${formData.selectedYear}-${formData.selectedMonth}-${formData.selectedDay}`,
       });
 
-      console.log(request.data);
-      navigate("/home");
-    } catch (err) {
-      return null;
+      toast?.open("Sucess!", "Your account has been created!", "bg-green-600");
+
+      navigate("/");
+    } catch (err: any) {
+      setError(err.response.data.message || "Something went wrong. Try again.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -57,32 +67,36 @@ export default function Register() {
               <span className="text-red ml-1">*</span>
             </h1>
             <LoginInput
+              autoComplete="email"
+              id="email"
               type="email"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
-            ></LoginInput>
+            />
             <h1 className="text-gray font-semibold">
               Nome de Usuário
               <span className="text-red ml-1">*</span>
             </h1>
             <LoginInput
+              id="userTag"
               type="text"
               onChange={(e) =>
                 setFormData({ ...formData, userTag: e.target.value })
               }
-            ></LoginInput>
+            />
             <h1 className="text-gray font-semibold">
               Senha
               <span className="text-red ml-1">*</span>
             </h1>
             <LoginInput
+              id="password"
               type="password"
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
               }
-            ></LoginInput>
+            />
             <h1 className="text-gray font-semibold">
               Data de Nascimento
               <span className="text-red ml-1">*</span>
@@ -104,7 +118,14 @@ export default function Register() {
                 }
               />
             </DateSelector.Root>
-            <LoginButton onClick={onFinish} inputText="Continuar" />
+            {error && (
+              <span className="text-red text-sm mt-1 self-start">{error}</span>
+            )}
+            <LoginButton
+              isLoading={isLoading}
+              onClick={onFinish}
+              inputText="Continuar"
+            />
           </div>
           <h1 className="text-sm text-gray">
             Já tem uma conta?

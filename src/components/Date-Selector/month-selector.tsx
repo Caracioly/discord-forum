@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { months } from "@/utils/calendar";
+import { months } from "@/utils/register/calendar";
 
 interface MonthSelectorProps {
   value?: string;
@@ -9,15 +9,20 @@ interface MonthSelectorProps {
 
 export function MonthSelector({ value, setValue }: MonthSelectorProps) {
   const monthOptions = () => {
-    const options: any = [];
-    months.forEach((mouth) => {
-      options.push(<option label={mouth.toString()} value={mouth}></option>);
+    const options: JSX.Element[] = [];
+    Object.entries(months).forEach(([monthName, monthValue]) => {
+      options.push(
+        <option key={monthValue} value={monthValue}>
+          {monthName}
+        </option>
+      );
     });
     return options;
   };
-  
+
   return (
     <select
+      id="month"
       className="scrollbar-thin scrollbar-thumb-gray text-left p-2 bg-gray-input rounded-md text-gray"
       value={value}
       onChange={(e) => setValue(e.target.value)}
