@@ -10,7 +10,8 @@ import { LoginInput } from "@/components/login-input";
 import { validateForm } from "@/utils/register/form-validation";
 
 import { Api } from "@/services/api";
-import { useToast } from "@/context/Toast";
+
+import { useToast } from "@/context/Toast/useToast";
 
 export default function Register() {
   const [isLoading, setIsLoading] = useState<boolean>(false);

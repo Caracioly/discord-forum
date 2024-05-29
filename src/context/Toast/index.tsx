@@ -1,8 +1,8 @@
-import { ToastContext } from "@/context/Toast";
+import { ToastContext } from "@/context/Toast/useToast";
 import { ToastProviderProps, ToastProviderStateProps } from "@/types/toast";
 import { useMemo, useState } from "react";
 
-import { Toast } from "@/components/Toast/toast";
+import { Toast } from "@/components/toast";
 
 export function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastProviderStateProps[]>([]);
@@ -16,7 +16,7 @@ export function ToastProvider({ children }: ToastProviderProps) {
     };
     setToasts((previousToasts) => [...previousToasts, newToast]);
 
-    setTimeout(() => closeToast(newToast.id), 3500)
+    setTimeout(() => closeToast(newToast.id), 3500);
   }
 
   function closeToast(id: number) {
@@ -34,22 +34,20 @@ export function ToastProvider({ children }: ToastProviderProps) {
   );
 
   return (
-    <>
-      <ToastContext.Provider value={contextValue}>
-        {children}
-          {toasts &&
-            toasts.map((toast) => {
-              return (
-                <Toast
-                  key={toast.id}
-                  description={toast.description}
-                  title={toast.title}
-                  color={toast.color}
-                  close={() => closeToast(toast.id)}
-                />
-              );
-            })}
-      </ToastContext.Provider>
-    </>
+    <ToastContext.Provider value={contextValue}>
+      {children}
+      {toasts &&
+        toasts.map((toast) => {
+          return (
+            <Toast
+              key={toast.id}
+              description={toast.description}
+              title={toast.title}
+              color={toast.color}
+              close={() => closeToast(toast.id)}
+            />
+          );
+        })}
+    </ToastContext.Provider>
   );
 }

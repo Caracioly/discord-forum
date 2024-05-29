@@ -15,3 +15,9 @@ export interface ToastType {
   color: string;
   close: () => void;
 }
+
+export interface ToastContextValue {
+  open: (title: string, description: string, color: string) => void
+  close: (id: number) => void;
+}
+

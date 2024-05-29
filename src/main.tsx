@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthProvider";
+import { ToastProvider } from "./context/Toast";
 
 import "./styles/index.css";
 import "@radix-ui/themes/styles.css";
@@ -12,7 +13,6 @@ import { Theme } from "@radix-ui/themes";
 import Home from "@/pages/home";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
-import { ToastProvider } from "./components/Toast/toast-provider";
 
 const router = createBrowserRouter([
   {
